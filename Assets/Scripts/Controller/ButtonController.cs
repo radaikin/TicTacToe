@@ -2,10 +2,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ButtonController : MonoBehaviour, IControllerSubject
+public delegate void InputEventHandler(int cellId);
+
+public class ButtonController : MonoBehaviour
 {
     public Button[] buttons;
-    private List<IControllerObserver> observers = new List<IControllerObserver>();
+
+    public event InputEventHandler observer;
 
     void Start()
     {
@@ -23,25 +26,8 @@ public class ButtonController : MonoBehaviour, IControllerSubject
     void ButtonClicked(int ButtonNumber)
     {
         Debug.Log("Button Num: " + ButtonNumber);
-        Notify(ButtonNumber);
+        observer(ButtonNumber);
         buttons[ButtonNumber].interactable = false;
     }
 
-    //Listener will send you CellId of pushed Button
-    public void Attach(IControllerObserver observer)
-    {
-        observers.Add(observer);
-        Debug.Log("Observer was added!");
-    }
-
-    public void Detach(IControllerObserver observer)
-    {
-        observers.Remove(observer);
-        Debug.Log("Observer was removed!");
-    }
-
-    public void Notify(int cellNumber)
-    {
-        observers.ForEach((obj) => obj.Update(cellNumber));
-    }
 }

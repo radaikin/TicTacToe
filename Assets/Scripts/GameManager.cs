@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 
+
+
 public class GameManager
 {
     private static GameManager s_instance;
@@ -8,14 +10,20 @@ public class GameManager
     private int moveCount;
     private CellState[] field = new CellState[9];
     public bool GetSide() => side;
-    public ControllerEventHandler ControllerEventHandler = new ControllerEventHandler();
+    
 
-    private GameManager() { }
+    private GameManager()
+    {
+        FieldInnit();
+        GameObject.FindGameObjectWithTag("ButtonController")
+        .GetComponent<ButtonController>().observer+= ChangeCellStateOnFiled;
+
+    }
 
     static GameManager()
     {
         s_instance = new GameManager();
-        s_instance.FieldInnit();
+        
     }
 
     public static GameManager GetInstance()
@@ -25,8 +33,9 @@ public class GameManager
 
     public void ChangeCellStateOnFiled(int CellId)
     {
-        Debug.Log("To Do");
-
+        field[CellId] = (side == true) ? CellState.X : CellState.O;
+        Debug.Log("Field state = " + field[CellId]);
+        ChangeSide();
     }
 
 
