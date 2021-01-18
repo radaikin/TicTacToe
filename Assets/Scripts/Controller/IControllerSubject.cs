@@ -1,7 +1,7 @@
-﻿public interface ISubject
+﻿public interface IControllerSubject
 {
-    void Attach(IObserver observer);
-    void Detach(IObserver observer);
-    void Notify();
+    void Attach(IControllerObserver observer);
+    void Detach(IControllerObserver observer);
+    void Notify(int cellNumber);
 
 }

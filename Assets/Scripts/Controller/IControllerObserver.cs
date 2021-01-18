@@ -1,5 +1,5 @@
-﻿public interface IObserver
+﻿public interface IControllerObserver
 {
-    void Update(ISubject subject);
+    void Update(int CellId);
 
 }

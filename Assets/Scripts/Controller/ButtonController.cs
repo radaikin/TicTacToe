@@ -1,20 +1,19 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
-public class ButtonController : MonoBehaviour, ISubject
+public class ButtonController : MonoBehaviour, IControllerSubject
 {
-    private GameManager gameManager;
     public Button[] buttons;
+    private List<IControllerObserver> observers = new List<IControllerObserver>();
 
     void Start()
     {
-        gameManager = GameManager.getInstance();
-
-        foreach(Button b in buttons)
+        foreach (Button b in buttons)
         {
             b.onClick.AddListener(() =>
             {
-                ButtonClicked(b.GetComponent<ButtonId>().getButtonId());
+                ButtonClicked(b.GetComponent<ButtonInfo>().getButtonId());
             });
 
         }
@@ -24,21 +23,25 @@ public class ButtonController : MonoBehaviour, ISubject
     void ButtonClicked(int ButtonNumber)
     {
         Debug.Log("Button Num: " + ButtonNumber);
-
+        Notify(ButtonNumber);
+        buttons[ButtonNumber].interactable = false;
     }
 
-    public void Attach(IObserver observer)
+    //Listener will send you CellId of pushed Button
+    public void Attach(IControllerObserver observer)
     {
-        throw new System.NotImplementedException();
+        observers.Add(observer);
+        Debug.Log("Observer was added!");
     }
 
-    public void Detach(IObserver observer)
+    public void Detach(IControllerObserver observer)
     {
-        throw new System.NotImplementedException();
+        observers.Remove(observer);
+        Debug.Log("Observer was removed!");
     }
 
-    public void Notify()
+    public void Notify(int cellNumber)
     {
-        throw new System.NotImplementedException();
+        observers.ForEach((obj) => obj.Update(cellNumber));
     }
 }
