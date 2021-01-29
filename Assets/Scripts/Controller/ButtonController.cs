@@ -1,33 +1,17 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
+using System.Collections;
 
-public delegate void InputEventHandler(int cellId);
-
-public class ButtonController : MonoBehaviour
+public class NewMonoBehaviour : MonoBehaviour
 {
-    public Button[] buttons;
-
-    public event InputEventHandler observer;
-
+    // Use this for initialization
     void Start()
     {
-        foreach (Button b in buttons)
-        {
-            b.onClick.AddListener(() =>
-            {
-                ButtonClicked(b.GetComponent<ButtonInfo>().getButtonId());
-            });
-
-        }
 
     }
 
-    void ButtonClicked(int ButtonNumber)
+    // Update is called once per frame
+    void Update()
     {
-        Debug.Log("Button Num: " + ButtonNumber);
-        observer(ButtonNumber);
-        buttons[ButtonNumber].interactable = false;
-    }
 
+    }
 }
