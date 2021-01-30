@@ -1,4 +1,5 @@
-﻿using System;
-public enum NewEnumeration
+﻿public enum PlayerSide
 {
+    FirstPlayer,
+    SecondPlayer
 }
