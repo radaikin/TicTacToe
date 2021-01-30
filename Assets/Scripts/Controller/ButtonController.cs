@@ -1,17 +1,27 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEngine.UI;
 
-public class NewMonoBehaviour : MonoBehaviour
+public delegate void InputEventHandler(int cellId);
+
+public class ButtonController : MonoBehaviour
 {
-    // Use this for initialization
+
+    public Button[] buttons;
+
+    public event InputEventHandler observer;
+
     void Start()
     {
+        foreach (Button b in buttons)
+        {
+            b.onClick.AddListener(() =>
+            {
+                observer(b.GetComponent<ButtonInfo>().getButtonId());
+            });
+
+        }
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
 
-    }
 }

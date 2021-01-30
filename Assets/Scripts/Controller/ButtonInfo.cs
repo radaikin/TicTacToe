@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class ButtonInfo : MonoBehaviour
 {
-
     [Header("Parameters")]
     [SerializeField] private int buttonId;
     private bool isClicked;
