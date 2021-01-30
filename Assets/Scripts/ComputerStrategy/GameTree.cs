@@ -66,18 +66,31 @@ public class GameTree
     {
         if (m_adjacencyList.ContainsKey(nodeHash)) return;
         m_adjacencyList.Add(nodeHash, new List<string>());
-        if (isLeaf(nodeHash)) return;
+        if (hasThreeInRaw(nodeHash))
+        {
+            Node result = new Node(side ? NodeState.Lose : NodeState.Win);
+            hashToNode.Add(nodeHash, result);
+            return;
+        }
+        List<string> value;
+        m_adjacencyList.TryGetValue(nodeHash, out value);
         for (int i = 0; i < 9; i++)
         {
             if (nodeHash[i] == '_')
             {
                 char[] childHash = nodeHash.ToCharArray();
                 childHash[i] = side ? 'x' : 'o';
-                List<string> value;
-                m_adjacencyList.TryGetValue(nodeHash, out value);
                 value.Add(new string(childHash));
-                BuilledTree(new string(childHash), !side);
             }
+        }
+        if (value.Count == 0)
+        {
+            hashToNode.Add(nodeHash, new Node(NodeState.Draw));
+            return;
+        }
+        foreach (string child in value)
+        {
+            BuilledTree(child, !side);
         }
     }
 
@@ -113,13 +126,7 @@ public class GameTree
 
         List<string> childes;
         m_adjacencyList.TryGetValue(nodeHash, out childes);
-        if (childes.Count == 0)
-        {
-            if (!hasThreeInRaw(nodeHash)) result = new Node(NodeState.Draw);
-            result = new Node(side ? NodeState.Lose : NodeState.Win);
-            hashToNode.Add(nodeHash, result);
-            return result;
-        }
+        
         bool hasWinPath = false;
         bool hasDrawPath = false;
         bool hasLosePath = false;

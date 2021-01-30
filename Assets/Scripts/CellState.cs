@@ -1,6 +1,4 @@
-﻿
-
-public enum CellState 
+﻿public enum CellState
 {
     X,
     O,
