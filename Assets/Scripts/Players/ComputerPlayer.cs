@@ -6,13 +6,11 @@ public class ComputerPlayer : AbstractPlayer
 {
     private Random random = new Random();
 
-    GameTree m_gameTree = new GameTree();
 
 
-    public ComputerPlayer()
+    public ComputerPlayer(PlayerSide playerSide)
     {
-        //recursive function should be called on game innit
-        m_gameTree.innit();
+        this.SetSide(playerSide);
     }
 
     public override void MakeAMove()
@@ -27,7 +25,7 @@ public class ComputerPlayer : AbstractPlayer
 
     private int makeChoise(NodeState nodeState)
     {
-        List<int> cells = m_gameTree.getCells(GameManager.GetInstance().getField(), nodeState);
+        List<int> cells = GameManager.GetInstance().GetGameTree.getCells(GameManager.GetInstance().GetField(), nodeState);
         if (cells.Count == 0) return -1;
         return cells[random.Next(cells.Count)];
     }

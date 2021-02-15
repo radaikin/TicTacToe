@@ -1,16 +1,16 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 public class ButtonInfo : MonoBehaviour
 {
-    [Header("Parameters")]
-    [SerializeField] private int buttonId;
+    private int buttonId;
     private bool isClicked;
 
-    public int getButtonId() => buttonId;
+    public int GetButtonId() => buttonId;
 
-    public bool getIsClicked() => isClicked;
+    public void SetButtonId(int buttonId) => this.buttonId = buttonId;
 
-    public void setIsClicked(bool isClicked) => this.isClicked = isClicked;
+    public bool GetIsClicked() => isClicked;
+
+    public void SetIsClicked(bool isClicked) => this.isClicked = isClicked;
 
 }

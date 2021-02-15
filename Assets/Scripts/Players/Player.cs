@@ -1,27 +1,44 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Player: AbstractPlayer
 {
-    bool canPlay;
+    bool m_canPlay;
+    private System.Random m_random = new System.Random();
 
     public Player(PlayerSide playerSide)
     {
         GameObject.FindGameObjectWithTag("ButtonController")
         .GetComponent<ButtonController>().observer += OnControllerPreset;
         this.SetSide(playerSide);
-        canPlay = playerSide == PlayerSide.FirstPlayer;
+        m_canPlay = playerSide == PlayerSide.FirstPlayer;
     }
 
     public override void MakeAMove()
     {
-        canPlay = true;   
+        m_canPlay = true;   
     }
 
     public void OnControllerPreset(int cellId)
     {
-        if (!canPlay || GameManager.GetInstance().getField()[cellId] != CellState.Empty) return;
+        if (!m_canPlay || GameManager.GetInstance().GetField()[cellId] != CellState.Empty) return;
         GameManager.GetInstance().ChangeCellStateOnFiled(cellId, this.GetPlayerSide());
-        canPlay = false;
+        m_canPlay = false;
         GetNextPlayer().MakeAMove();
+    }
+
+    public int makeAHint()
+    {
+        int cell = makeChoise(NodeState.Win);
+        if (cell == -1) cell = makeChoise(NodeState.Draw);
+        if (cell == -1) cell = makeChoise(NodeState.Lose);
+        return cell;
+    }
+
+    private int makeChoise(NodeState nodeState)
+    {
+        List<int> cells = GameManager.GetInstance().GetGameTree.getCells(GameManager.GetInstance().GetField(), nodeState);
+        if (cells.Count == 0) return -1;
+        return cells[m_random.Next(cells.Count)];
     }
 }
