@@ -5,27 +5,23 @@ public delegate void InputEventHandler(int cellId);
 
 public class ButtonController : MonoBehaviour
 {
-    [SerializeField]private Button[] buttons;
-    public event InputEventHandler observer;
-    public Vector2 sizeDelta;
+    [SerializeField]private Button[] m_buttons;
+    public event InputEventHandler m_observer;
 
     void Start()
     {
-        sizeDelta = new Vector2(Screen.height * 0.9f, Screen.height * 0.9f);
-        gameObject.GetComponent<RectTransform>().sizeDelta = sizeDelta;
-        buttons = new Button[9];
-        buttons[0] = gameObject.GetComponentInChildren<Button>();
+        this.gameObject.tag = "ButtonController";
         int i = 0;
-        foreach (Button b in buttons)
+        foreach (Button b in m_buttons)
         {
-            b.GetComponent<ButtonInfo>().SetButtonId(i++);
+            m_buttons[i].GetComponent<ButtonInfo>().SetButtonId(i++);
             b.onClick.AddListener(() =>
             {
-                observer(b.GetComponent<ButtonInfo>().GetButtonId());
+                var tmp = b.GetComponent<ButtonInfo>().GetButtonId();
+                m_observer(b.GetComponent<ButtonInfo>().GetButtonId());
             });
-            
         }
     }
 
-    public Button[] GetButtons() => buttons;
+    public Button[] GetButtons() => m_buttons;
 }

@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-
 public class GameManager
 {
     private static GameManager s_instance;
@@ -23,18 +22,14 @@ public class GameManager
     static GameManager()
     {
         s_instance = new GameManager();
-        
+
     }
 
-    public static GameManager GetInstance()
-    {
-        return s_instance;
-    }
+    public static GameManager GetInstance() => s_instance;
 
-    public CellState[] GetField()
-    {
-        return m_field;
-    }
+    public CellState[] GetField() => m_field;
+
+    public GameTree GetGameTree => m_gameTree;
 
     public void ChangeCellStateOnFiled(int cellId, PlayerSide playerSide)
     {
@@ -82,7 +77,7 @@ public class GameManager
         m_moveCount = 0;
     }
 
-    public GameTree GetGameTree => m_gameTree;
+    
 
     private bool HasThreeInRow()
     {

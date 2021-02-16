@@ -1,22 +1,22 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Player: AbstractPlayer
+public class Player : AbstractPlayer
 {
-    bool m_canPlay;
+    private bool m_canPlay;
     private System.Random m_random = new System.Random();
 
     public Player(PlayerSide playerSide)
     {
-        GameObject.FindGameObjectWithTag("ButtonController")
-        .GetComponent<ButtonController>().observer += OnControllerPreset;
         this.SetSide(playerSide);
+        GameObject.FindGameObjectWithTag("ButtonController")
+        .GetComponent<ButtonController>().m_observer += OnControllerPreset;
         m_canPlay = playerSide == PlayerSide.FirstPlayer;
     }
 
     public override void MakeAMove()
     {
-        m_canPlay = true;   
+        m_canPlay = true;
     }
 
     public void OnControllerPreset(int cellId)
@@ -42,3 +42,4 @@ public class Player: AbstractPlayer
         return cells[m_random.Next(cells.Count)];
     }
 }
+
