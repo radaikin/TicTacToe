@@ -37,17 +37,6 @@ public class GameManager
         m_field[cellId] = (playerSide == PlayerSide.FirstPlayer) ? CellState.X : CellState.O;
         EndOfMove(playerSide);
 
-        //---------------Consloe field print
-        string tmp = " ";
-        for (int i = 0; i < 9; i++)
-        {
-            if (i % 3 == 0) tmp += "\n";
-            if (m_field[i] == CellState.X) tmp += "x";
-            else if (m_field[i] == CellState.O) tmp += "o";
-            else tmp += "_";
-        }
-        Debug.Log(tmp);
-        //--------------Console field print
     }
 
     private void EndOfMove(PlayerSide playerSide)
@@ -90,8 +79,7 @@ public class GameManager
 
     private bool CellsComparator(CellState cs1, CellState cs2, CellState cs3)
     {
-        return cs1 == cs2 && cs1 == cs3;
-
+        return cs1 != CellState.Empty && cs1 == cs2 && cs1 == cs3;
     }
 
     private void FieldInnit()

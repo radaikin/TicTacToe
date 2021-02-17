@@ -24,4 +24,16 @@ public class ButtonController : MonoBehaviour
     }
 
     public Button[] GetButtons() => m_buttons;
+
+    private void Update()
+    {
+        for (int i = 0; i < 9; i++)
+        {
+            CellState[] field = GameManager.GetInstance().GetField();
+            if (field[i] != CellState.Empty)
+            {
+                m_buttons[i].interactable = false;
+            }
+        }
+    }
 }

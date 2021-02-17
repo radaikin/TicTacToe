@@ -8,6 +8,7 @@ TagManager:
   - Filed Line
   - Cell
   - ButtonController
+  - Timer
   layers:
   - Default
   - TransparentFX
