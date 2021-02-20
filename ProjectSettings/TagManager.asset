@@ -9,6 +9,7 @@ TagManager:
   - Cell
   - ButtonController
   - Timer
+  - Header
   layers:
   - Default
   - TransparentFX
@@ -18,8 +19,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - Header
+  - Timer
   - 
   - 
   - 
@@ -51,4 +52,10 @@ TagManager:
     locked: 0
   - name: UI
     uniqueID: 2264765311
+    locked: 0
+  - name: Header
+    uniqueID: 2149819113
+    locked: 0
+  - name: Timer
+    uniqueID: 927027085
     locked: 0
