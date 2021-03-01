@@ -13,7 +13,7 @@ public class GameTree
 
     public void innit()
     {
-        BuilledTree("_________", true);
+        BuildTree("_________", true);
         StateCulculation("_________", true);
         Console.Write("Done");
     }
@@ -62,7 +62,7 @@ public class GameTree
         return -1;
     }
 
-    private void BuilledTree(string nodeHash, bool side)
+    private void BuildTree(string nodeHash, bool side)
     {
         if (m_adjacencyList.ContainsKey(nodeHash)) return;
         m_adjacencyList.Add(nodeHash, new List<string>());
@@ -90,7 +90,7 @@ public class GameTree
         }
         foreach (string child in value)
         {
-            BuilledTree(child, !side);
+            BuildTree(child, !side);
         }
     }
 
