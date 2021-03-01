@@ -4,5 +4,9 @@ using UnityEngine;
 
 public class HintButton : MonoBehaviour
 {
+    public void Hint()
+    {
+
+    }
     
 }

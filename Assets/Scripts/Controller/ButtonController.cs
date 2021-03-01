@@ -34,6 +34,7 @@ public class ButtonController : MonoBehaviour
             {
                 m_buttons[i].interactable = false;
             }
+            else m_buttons[i].interactable = true;
         }
     }
 }

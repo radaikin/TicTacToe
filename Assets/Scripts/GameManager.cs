@@ -42,7 +42,8 @@ public class GameManager
     public void ChangeCellStateOnFiled(int cellId, PlayerSide playerSide)
     {
 
-        m_field[cellId] = (playerSide == PlayerSide.FirstPlayer) ? CellState.X : CellState.O;
+        m_field[cellId] = (playerSide == PlayerSide.FirstPlayer) ?
+            CellState.X : CellState.O;
         EndOfMove(playerSide);
 
     }
@@ -67,10 +68,12 @@ public class GameManager
         Debug.Log("Draw!");
     }
 
-    private void Restart()
+    public void Restart()
     {
         FieldInnit();
         m_moveCount = 0;
+        GameObject.FindGameObjectWithTag("Timer")
+            .AddComponent<Timer>().ResetTimer();
     }
 
     
