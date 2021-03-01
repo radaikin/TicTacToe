@@ -1,12 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
-    public void PlayGame()
+
+    public void PlayPVE()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        GameManager.GetInstance().SetUp(new Player(), new ComputerPlayer());
+        SceneManager.LoadScene("GameScene");
+
     }
+
+    public void PlayPVP()
+    {
+        GameManager.GetInstance().SetUp(new Player(), new Player());
+        SceneManager.LoadScene("GameScene");
+    }
+
 }

@@ -13,16 +13,24 @@ public class GameManager
     {
         FieldInnit();
         m_gameTree.innit();
-        m_firstPlayer = new Player(PlayerSide.FirstPlayer);
-        m_secondPlayer = new ComputerPlayer(PlayerSide.SecondPlayer);
-        m_firstPlayer.SetNextPlayer(m_secondPlayer);
-        m_secondPlayer.SetNextPlayer(m_firstPlayer);
     }
 
     static GameManager()
     {
         s_instance = new GameManager();
 
+    }
+
+    public void SetUp(IPlayer firstPlayer, IPlayer secondPlayer)
+    {
+        m_firstPlayer = firstPlayer;
+        m_secondPlayer = secondPlayer;
+        //remove set side from IPlayer
+        m_firstPlayer.SetSide(PlayerSide.FirstPlayer);
+        m_secondPlayer.SetSide(PlayerSide.SecondPlayer);
+        m_firstPlayer.SetNextPlayer(m_secondPlayer);
+        m_secondPlayer.SetNextPlayer(m_firstPlayer);
+        m_firstPlayer.MakeAMove();
     }
 
     public static GameManager GetInstance() => s_instance;
@@ -56,8 +64,7 @@ public class GameManager
 
     private void Draw()
     {
-
-
+        Debug.Log("Draw!");
     }
 
     private void Restart()

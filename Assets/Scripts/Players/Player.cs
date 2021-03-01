@@ -1,17 +1,17 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : AbstractPlayer
 {
     private bool m_canPlay;
     private System.Random m_random = new System.Random();
 
-    public Player(PlayerSide playerSide)
+    public Player()
     {
-        this.SetSide(playerSide);
-        GameObject.FindGameObjectWithTag("ButtonController")
-        .GetComponent<ButtonController>().m_observer += OnControllerPreset;
-        m_canPlay = playerSide == PlayerSide.FirstPlayer;
+        
+        m_canPlay = false;
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     public override void MakeAMove()
@@ -33,6 +33,13 @@ public class Player : AbstractPlayer
         if (cell == -1) cell = makeChoise(NodeState.Draw);
         if (cell == -1) cell = makeChoise(NodeState.Lose);
         return cell;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name != "GameScene") return;
+         GameObject.FindGameObjectWithTag("ButtonController")
+         .GetComponent<ButtonController>().m_observer += OnControllerPreset;
     }
 
     private int makeChoise(NodeState nodeState)

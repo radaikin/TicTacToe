@@ -6,5 +6,4 @@ public interface IPlayer
     IPlayer GetNextPlayer();
     void SetSide(PlayerSide playerSide);
     void MakeAMove();
-
 }

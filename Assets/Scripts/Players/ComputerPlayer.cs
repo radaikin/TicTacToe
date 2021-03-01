@@ -6,13 +6,6 @@ public class ComputerPlayer : AbstractPlayer
 {
     private Random random = new Random();
 
-
-
-    public ComputerPlayer(PlayerSide playerSide)
-    {
-        this.SetSide(playerSide);
-    }
-
     public override void MakeAMove()
     {
         int cell = makeChoise(NodeState.Lose);
