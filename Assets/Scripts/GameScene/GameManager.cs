@@ -72,8 +72,9 @@ public class GameManager
     {
         FieldInnit();
         m_moveCount = 0;
+        //Replace with subscriber
         GameObject.FindGameObjectWithTag("Timer")
-            .AddComponent<Timer>().ResetTimer();
+            .GetComponent<Timer>().ResetTimer();
     }
 
     

@@ -17,7 +17,6 @@ public class ButtonController : MonoBehaviour
             m_buttons[i].GetComponent<ButtonInfo>().SetButtonId(i++);
             b.onClick.AddListener(() =>
             {
-                var tmp = b.GetComponent<ButtonInfo>().GetButtonId();
                 m_observer(b.GetComponent<ButtonInfo>().GetButtonId());
             });
         }
