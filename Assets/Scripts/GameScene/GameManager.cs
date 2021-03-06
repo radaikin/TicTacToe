@@ -1,13 +1,20 @@
 ﻿using UnityEngine;
 
+public delegate void EndOfGame();
+public delegate void RestartTimer();
+
 public class GameManager
 {
     private static GameManager s_instance;
     private int m_moveCount = 0;
     private CellState[] m_field = new CellState[9];
+
     private IPlayer m_firstPlayer;
     private IPlayer m_secondPlayer;
+
     private GameTree m_gameTree = new GameTree();
+    public event EndOfGame m_EndOfGameEvent;
+    public event RestartTimer m_RestartTimerEvent;
 
     private GameManager()
     {
@@ -61,20 +68,20 @@ public class GameManager
     private void Win(PlayerSide player)
     {
         Debug.Log("Player " + player.ToString() + " won!");
+        m_EndOfGameEvent();
     }
 
     private void Draw()
     {
         Debug.Log("Draw!");
+        m_EndOfGameEvent();
     }
 
     public void Restart()
     {
         FieldInnit();
         m_moveCount = 0;
-        //Replace with subscriber
-        GameObject.FindGameObjectWithTag("Timer")
-            .GetComponent<Timer>().ResetTimer();
+        m_RestartTimerEvent();
     }
 
     

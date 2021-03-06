@@ -8,6 +8,7 @@ public class Timer : MonoBehaviour
     private Text timerText;
     private Font font;
 
+
     void Start()
     {
         time = 0f;
@@ -16,6 +17,7 @@ public class Timer : MonoBehaviour
         font = Resources.Load<Font>("Fonts/Love Craft");
         timerText = gameObject.GetComponent<Text>();
         timerText.font = font;
+        GameManager.GetInstance().m_RestartTimerEvent += RestartTimer;
     }
 
     void Update()
@@ -37,7 +39,7 @@ public class Timer : MonoBehaviour
         timerIsRunning = false;
     }
 
-    public void ResetTimer()
+    private void RestartTimer()
     {
         time = 0f;
     }

@@ -293,8 +293,9 @@ GameObject:
   - component: {fileID: 35658477}
   - component: {fileID: 35658476}
   - component: {fileID: 35658475}
+  - component: {fileID: 35658478}
   m_Layer: 5
-  m_Name: Restart
+  m_Name: PlayAgainButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -362,7 +363,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 35658476}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 35658478}
+        m_TargetAssemblyTypeName: PlayAgainButton, Assembly-CSharp
+        m_MethodName: PlayAgain
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &35658476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -401,6 +414,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 35658473}
   m_CullTransparentMesh: 0
+--- !u!114 &35658478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 35658473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd48643a23374fe4989c9248cfb83c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &56748488
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1815,7 +1840,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Main Menu
+  m_Text: Back to menu
 --- !u!222 &1141276326
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1934,7 +1959,7 @@ GameObject:
   - component: {fileID: 1530879149}
   - component: {fileID: 1530879152}
   m_Layer: 5
-  m_Name: MainMenu
+  m_Name: BackToMenuButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2002,7 +2027,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1530879150}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1530879152}
+        m_TargetAssemblyTypeName: BackToMenuButton, Assembly-CSharp
+        m_MethodName: BackToMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1530879150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2332,7 +2369,7 @@ GameObject:
   - component: {fileID: 1818906699}
   - component: {fileID: 1818906698}
   m_Layer: 5
-  m_Name: Text
+  m_Name: EndOfGameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2489,9 +2526,10 @@ GameObject:
   - component: {fileID: 1876731136}
   - component: {fileID: 1876731138}
   - component: {fileID: 1876731137}
+  - component: {fileID: 1876731139}
   m_Layer: 5
   m_Name: EndOfGamePopUp
-  m_TagString: Untagged
+  m_TagString: EndOfGamePopUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2556,6 +2594,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1876731135}
   m_CullTransparentMesh: 0
+--- !u!114 &1876731139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1876731135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2999c49d3529d419cb63c3e396c38982, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1945136407
 GameObject:
   m_ObjectHideFlags: 0
@@ -2791,7 +2841,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Restart '
+  m_Text: Play again
 --- !u!222 &1963674701
 CanvasRenderer:
   m_ObjectHideFlags: 0
