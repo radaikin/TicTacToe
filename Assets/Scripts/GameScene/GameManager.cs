@@ -2,6 +2,7 @@
 
 public delegate void EndOfGame();
 public delegate void RestartTimer();
+public delegate void StopTimer();
 
 public class GameManager
 {
@@ -15,6 +16,8 @@ public class GameManager
     private GameTree m_gameTree = new GameTree();
     public event EndOfGame m_EndOfGameEvent;
     public event RestartTimer m_RestartTimerEvent;
+    public event StopTimer m_StopTimer;
+
 
     private GameManager()
     {
@@ -68,12 +71,14 @@ public class GameManager
     private void Win(PlayerSide player)
     {
         Debug.Log("Player " + player.ToString() + " won!");
+        m_StopTimer();
         m_EndOfGameEvent();
     }
 
     private void Draw()
     {
         Debug.Log("Draw!");
+        m_StopTimer();
         m_EndOfGameEvent();
     }
 

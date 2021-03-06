@@ -18,6 +18,7 @@ public class Timer : MonoBehaviour
         timerText = gameObject.GetComponent<Text>();
         timerText.font = font;
         GameManager.GetInstance().m_RestartTimerEvent += RestartTimer;
+        GameManager.GetInstance().m_StopTimer += StopTimer;
     }
 
     void Update()
