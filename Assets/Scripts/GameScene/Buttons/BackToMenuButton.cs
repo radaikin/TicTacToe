@@ -6,7 +6,7 @@ public class BackToMenuButton : MonoBehaviour
 
     public void BackToMenu()
     {
-        GameManager.GetInstance().Restart();
+        GameManager.GetInstance().CleanUp();
         SceneManager.LoadScene("MainMenu");
     }
 

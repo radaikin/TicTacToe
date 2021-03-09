@@ -1,6 +1,4 @@
-﻿using System;
-using AdjacencyList = System.Collections.Generic.SortedDictionary<string, System.Collections.Generic.List<string>>;
-
+﻿
 public enum NodeState
 {
     Win,

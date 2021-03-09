@@ -3,17 +3,16 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
-
     public void PlayPVE()
     {
-        GameManager.GetInstance().SetUp(new Player(), new ComputerPlayer());
+        GameManager.GetInstance().VsComputerSetUp();
         SceneManager.LoadScene("GameScene");
 
     }
 
     public void PlayPVP()
     {
-        GameManager.GetInstance().SetUp(new Player(), new Player());
+        GameManager.GetInstance().VsPlayerSetUp();
         SceneManager.LoadScene("GameScene");
     }
 

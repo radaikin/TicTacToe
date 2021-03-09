@@ -1,50 +1,36 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Player : AbstractPlayer
 {
-    private bool m_canPlay;
     private System.Random m_random = new System.Random();
 
-    public Player()
+    private void Start()
     {
-        
-        m_canPlay = false;
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    public override void MakeAMove()
-    {
-        m_canPlay = true;
+        GameObject.FindGameObjectWithTag("ButtonController")
+        .GetComponent<ButtonController>().m_observer += OnControllerPreset;
     }
 
     public void OnControllerPreset(int cellId)
     {
-        if (!m_canPlay || GameManager.GetInstance().GetField()[cellId] != CellState.Empty) return;
-        GameManager.GetInstance().ChangeCellStateOnFiled(cellId, this.GetPlayerSide());
-        m_canPlay = false;
-        GetNextPlayer().MakeAMove();
+        if (this.MyStep() && GameManager.GetInstance().GetField()[cellId] == CellState.Empty)
+        {
+            this.ChangeFiledState(cellId);
+        }
+        
     }
 
-    public int makeAHint()
+    public int MakeAHint()
     {
-        int cell = makeChoise(NodeState.Win);
-        if (cell == -1) cell = makeChoise(NodeState.Draw);
-        if (cell == -1) cell = makeChoise(NodeState.Lose);
+        int cell = MakeChoise(NodeState.Win);
+        if (cell == -1) cell = MakeChoise(NodeState.Draw);
+        if (cell == -1) cell = MakeChoise(NodeState.Lose);
         return cell;
     }
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    private int MakeChoise(NodeState nodeState)
     {
-        if (scene.name != "GameScene") return;
-         GameObject.FindGameObjectWithTag("ButtonController")
-         .GetComponent<ButtonController>().m_observer += OnControllerPreset;
-    }
-
-    private int makeChoise(NodeState nodeState)
-    {
-        List<int> cells = GameManager.GetInstance().GetGameTree.getCells(GameManager.GetInstance().GetField(), nodeState);
+        List<int> cells = GameManager.GetInstance().GetGameTree().GetCells(GameManager.GetInstance().GetField(), nodeState);
         if (cells.Count == 0) return -1;
         return cells[m_random.Next(cells.Count)];
     }

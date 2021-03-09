@@ -1,8 +1,8 @@
-﻿using System;
-public abstract class AbstractPlayer : IPlayer
+﻿using UnityEngine;
+
+public abstract class AbstractPlayer : MonoBehaviour, IPlayer
 {
-    private PlayerSide playerSide;
-    private IPlayer nextPlayer;
+    private PlayerSide m_PlayerSide;
 
     public AbstractPlayer()
     {
@@ -11,26 +11,21 @@ public abstract class AbstractPlayer : IPlayer
 
     public PlayerSide GetPlayerSide()
     {
-        return playerSide;
-    }
-
-    public virtual void MakeAMove()
-    {
-        throw new NotImplementedException();
-    }
-
-    public IPlayer GetNextPlayer()
-    {
-        return nextPlayer;
-    }
-
-    public void SetNextPlayer(IPlayer nextPlayer)
-    {
-        this.nextPlayer = nextPlayer;
+        return m_PlayerSide;
     }
 
     public void SetSide(PlayerSide playerSide)
     {
-        this.playerSide = playerSide;
+        this.m_PlayerSide = playerSide;
+    }
+
+    public bool MyStep()
+    {
+        return GameManager.GetInstance().GetCurrentPlayer() == m_PlayerSide;
+    }
+
+    public void ChangeFiledState(int cellId)
+    {
+        GameManager.GetInstance().ChangeFiledState(cellId, m_PlayerSide);
     }
 }

@@ -4,50 +4,73 @@ using AdjacencyList = System.Collections.Generic.SortedDictionary<string, System
 
 public class GameTree
 {
-    AdjacencyList m_adjacencyList = new AdjacencyList();
-    private SortedDictionary<string, Node> hashToNode = new SortedDictionary<string, Node>();
+    private AdjacencyList m_adjacencyList = new AdjacencyList();
+    private SortedDictionary<string, Node> m_HashToNode = new SortedDictionary<string, Node>();
 
     public GameTree()
     {
     }
 
-    public void innit()
+    public void Innit()
     {
         BuildTree("_________", true);
         StateCulculation("_________", true);
         Console.Write("Done");
     }
 
-    public bool isGameOver(CellState[] field)
+    public AdjacencyList GetAdjacencyList() => m_adjacencyList;
+
+    public Node GetNodeByHash(CellState[] field)
     {
-        return isLeaf(hash(field));
+        Node result;
+        m_HashToNode.TryGetValue(Hash(field), out result);
+        return result;
+    }
+
+    public bool NodeHasChild(CellState[] field)
+    {
+        List<string> childrens = new List<string>();
+        m_adjacencyList.TryGetValue(Hash(field), out childrens);
+        return childrens.Count != 0;
+    }
+
+    public NodeState GetNodeState(CellState[] fieldState)
+    {
+        Node node;
+        m_HashToNode.TryGetValue(Hash(fieldState), out node);
+        return node.state;
+    }
+
+    public bool IsGameOver(CellState[] field)
+    {
+        return IsLeaf(Hash(field));
     }
     //Call only if Game Over and not Draw
     public PlayerSide Winner(CellState[] field)
     {
         Node node;
-        hashToNode.TryGetValue(hash(field), out node);
+        m_HashToNode.TryGetValue(Hash(field), out node);
         return node.state == NodeState.Win ? PlayerSide.FirstPlayer : PlayerSide.SecondPlayer;
     }
     //Call only if Game Over
-    public bool isDraw(CellState[] field)
+    public bool IsDraw(CellState[] field)
     {
-        return !hasThreeInRaw(hash(field));
+        return !HasThreeInRaw(Hash(field));
     }
 
-    public List<int> getCells(CellState[] field, NodeState state)
+    public List<int> GetCells(CellState[] field, NodeState state)
     {
         List<int> result = new List<int>();
 
         List<string> childrens;
-        m_adjacencyList.TryGetValue(hash(field), out childrens);
+        m_adjacencyList.TryGetValue(Hash(field), out childrens);
         foreach (string child in childrens)
         {
             Node node;
-            hashToNode.TryGetValue(child, out node);
+            m_HashToNode.TryGetValue(child, out node);
             if (node.state == state)
             {
-                result.Add(FindDifference(hash(field), child));
+                result.Add(FindDifference(Hash(field), child));
             }
         }
         return result;
@@ -66,10 +89,10 @@ public class GameTree
     {
         if (m_adjacencyList.ContainsKey(nodeHash)) return;
         m_adjacencyList.Add(nodeHash, new List<string>());
-        if (hasThreeInRaw(nodeHash))
+        if (HasThreeInRaw(nodeHash))
         {
             Node result = new Node(side ? NodeState.Lose : NodeState.Win);
-            hashToNode.Add(nodeHash, result);
+            m_HashToNode.Add(nodeHash, result);
             return;
         }
         List<string> value;
@@ -85,7 +108,7 @@ public class GameTree
         }
         if (value.Count == 0)
         {
-            hashToNode.Add(nodeHash, new Node(NodeState.Draw));
+            m_HashToNode.Add(nodeHash, new Node(NodeState.Draw));
             return;
         }
         foreach (string child in value)
@@ -94,7 +117,7 @@ public class GameTree
         }
     }
 
-    private bool isLeaf(string nodeHash)
+    private bool IsLeaf(string nodeHash)
     {
         bool hasEmpty = false;
         foreach (char c in nodeHash)
@@ -102,10 +125,10 @@ public class GameTree
             hasEmpty |= c == '_';
         }
 
-        return hasThreeInRaw(nodeHash) || !hasEmpty;
+        return HasThreeInRaw(nodeHash) || !hasEmpty;
     }
 
-    private bool hasThreeInRaw(string nodeHash)
+    private bool HasThreeInRaw(string nodeHash)
     {
         return (nodeHash[0] == nodeHash[1] && nodeHash[0] == nodeHash[2] && nodeHash[0] != '_')
             || (nodeHash[3] == nodeHash[4] && nodeHash[3] == nodeHash[5] && nodeHash[3] != '_')
@@ -122,7 +145,7 @@ public class GameTree
     private Node StateCulculation(string nodeHash, bool side)
     {
         Node result;
-        if (hashToNode.TryGetValue(nodeHash, out result)) return result;
+        if (m_HashToNode.TryGetValue(nodeHash, out result)) return result;
 
         List<string> childes;
         m_adjacencyList.TryGetValue(nodeHash, out childes);
@@ -141,11 +164,11 @@ public class GameTree
         if ((side && hasWinPath)||(!hasLosePath && !hasDrawPath)) result = new Node(NodeState.Win);
         else if (!hasLosePath || (side &&  hasDrawPath)) result = new Node(NodeState.Draw);
         else result = new Node(NodeState.Lose);
-        hashToNode.Add(nodeHash, result);
+        m_HashToNode.Add(nodeHash, result);
         return result;
     }
 
-    private string hash(CellState[] field)
+    private string Hash(CellState[] field)
     {
         string nodeHash = "";
         foreach (CellState cs in field)

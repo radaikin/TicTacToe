@@ -11,6 +11,8 @@ TagManager:
   - Timer
   - Header
   - EndOfGamePopUp
+  - FirstPlayer
+  - SecondPlayer
   layers:
   - Default
   - TransparentFX
