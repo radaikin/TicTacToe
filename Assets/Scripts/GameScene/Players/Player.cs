@@ -13,7 +13,9 @@ public class Player : AbstractPlayer
 
     public void OnControllerPreset(int cellId)
     {
-        if (this.MyStep() && GameManager.GetInstance().GetField()[cellId] == CellState.Empty)
+        if (this.MyStep() &&
+            (GameManager.GetInstance().GetField()[cellId] == CellState.Empty
+            || GameManager.GetInstance().GetField()[cellId] == CellState.Hint))
         {
             this.ChangeFiledState(cellId);
         }

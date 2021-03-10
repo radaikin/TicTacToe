@@ -2,5 +2,6 @@
 {
     X,
     O,
+    Hint,
     Empty
 }

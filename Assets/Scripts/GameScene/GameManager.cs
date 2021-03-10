@@ -28,10 +28,12 @@ public class GameManager: MonoBehaviour
 
             if (s_instance.m_EnemySetUP == EnemySetUP.Computer)
             {
+                GameObject.FindWithTag("HintButton").SetActive(true);
                 GameObject.FindWithTag("SecondPlayer").AddComponent<ComputerPlayer>();
             }
             else if (s_instance.m_EnemySetUP == EnemySetUP.Player)
             {
+                GameObject.FindWithTag("HintButton").SetActive(false);
                 GameObject.FindWithTag("SecondPlayer").AddComponent<Player>();
             }
             GameObject.FindWithTag("FirstPlayer").GetComponent<AbstractPlayer>().SetSide(PlayerSide.FirstPlayer);
@@ -89,6 +91,19 @@ public class GameManager: MonoBehaviour
         FieldInnit();
         m_MoveCounter = 0;
         m_RestartTimerEvent();
+    }
+
+    public void SetHintToACell(int cellId)
+    {
+        m_FieldState[cellId] = CellState.Hint;
+    }
+
+    public void RemoveHintFromACell(int cellId)
+    {
+        if (m_FieldState[cellId] == CellState.Hint)
+        {
+            m_FieldState[cellId] = CellState.Empty;
+        }
     }
 
     public void CleanUp()

@@ -19,12 +19,12 @@ public abstract class AbstractPlayer : MonoBehaviour, IPlayer
         this.m_PlayerSide = playerSide;
     }
 
-    public bool MyStep()
+    protected bool MyStep()
     {
         return GameManager.GetInstance().GetCurrentPlayer() == m_PlayerSide;
     }
 
-    public void ChangeFiledState(int cellId)
+    protected void ChangeFiledState(int cellId)
     {
         GameManager.GetInstance().ChangeFiledState(cellId, m_PlayerSide);
     }

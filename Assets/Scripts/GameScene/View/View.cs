@@ -3,18 +3,20 @@ using UnityEngine.UI;
 
 public class View : MonoBehaviour
 {
-    private Sprite x_sprite;
-    private Sprite o_sprite;
+    private Sprite m_xSprite;
+    private Sprite m_oSprite;
+    private Sprite m_HintSprite;
     private ButtonController buttonController;
     private Button[] buttons;
-    private CellState[] field;
+    private CellState[] fieldState;
 
     void Start()
     {
-        field = GameManager.GetInstance().GetField();
+        fieldState = GameManager.GetInstance().GetField();
 
-        x_sprite = Resources.Load<Sprite>("MoonActive/ExTarget");
-        o_sprite = Resources.Load<Sprite>("MoonActive/CircleTarget");
+        m_xSprite = Resources.Load<Sprite>("MoonActive/ExTarget");
+        m_oSprite = Resources.Load<Sprite>("MoonActive/CircleTarget");
+        m_HintSprite = Resources.Load<Sprite>("Buttons/Hint");
 
         buttonController = GameObject.FindGameObjectWithTag("ButtonController")
             .GetComponent<ButtonController>();
@@ -25,19 +27,24 @@ public class View : MonoBehaviour
     {
         for (int i = 0; i < 9; i++)
         {
-            if (field[i] == CellState.O)
+            if (fieldState[i] == CellState.O)
             {
                 buttons[i].image.color = new Color(255, 255, 255, 1);
-                buttons[i].image.sprite = o_sprite;
+                buttons[i].image.sprite = m_oSprite;
             }
-            else if (field[i] == CellState.X)
+            else if (fieldState[i] == CellState.X)
             {
                 buttons[i].image.color = new Color(255, 255, 255, 1);
-                buttons[i].image.sprite = x_sprite;
+                buttons[i].image.sprite = m_xSprite;
             }
-            else if (field[i] == CellState.Empty)
+            else if (fieldState[i] == CellState.Empty)
             {
                 buttons[i].image.color = new Color(0, 0, 0, 0);
+            }
+            else if (fieldState[i] == CellState.Hint)
+            {
+                buttons[i].image.color = new Color(255, 255, 255, 0.5f);
+                buttons[i].image.sprite = m_HintSprite;
             }
         }
     }

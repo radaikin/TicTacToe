@@ -13,6 +13,7 @@ TagManager:
   - EndOfGamePopUp
   - FirstPlayer
   - SecondPlayer
+  - HintButton
   layers:
   - Default
   - TransparentFX
