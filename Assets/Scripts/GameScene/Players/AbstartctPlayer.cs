@@ -2,7 +2,7 @@
 
 public abstract class AbstractPlayer : MonoBehaviour, IPlayer
 {
-    private string m_Name;
+    private string m_Name = "Player";
     private PlayerSide m_PlayerSide;
 
     public PlayerSide GetPlayerSide()

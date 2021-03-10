@@ -19,7 +19,6 @@ public class Player : AbstractPlayer
         {
             this.ChangeFiledState(cellId);
         }
-        
     }
 
     public int MakeAHint()

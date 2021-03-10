@@ -193,7 +193,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Name
+  m_Text: Player
 --- !u!222 &8370579
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -638,7 +638,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: fad9b12de8b984fb39e6c8d2723f3575, type: 3}
-    m_FontSize: 300
+    m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 4
@@ -1291,7 +1291,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2224168662555485465, guid: b09775b4114a54213be58f4d005e5b02, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2224168662555485465, guid: b09775b4114a54213be58f4d005e5b02, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -1344,6 +1344,34 @@ PrefabInstance:
     - target: {fileID: 2224168662555485465, guid: b09775b4114a54213be58f4d005e5b02, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2224168662555485465, guid: b09775b4114a54213be58f4d005e5b02, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: MainMenuController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2224168662555485465, guid: b09775b4114a54213be58f4d005e5b02, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2224168662555485465, guid: b09775b4114a54213be58f4d005e5b02, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2224168662555485465, guid: b09775b4114a54213be58f4d005e5b02, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2224168662555485465, guid: b09775b4114a54213be58f4d005e5b02, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1746728644}
+    - target: {fileID: 2224168662555485465, guid: b09775b4114a54213be58f4d005e5b02, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: OnSettingsPressed
+      objectReference: {fileID: 0}
+    - target: {fileID: 2224168662555485465, guid: b09775b4114a54213be58f4d005e5b02, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2224168662555485466, guid: b09775b4114a54213be58f4d005e5b02, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1533,7 +1561,7 @@ GameObject:
   - component: {fileID: 1491120021}
   m_Layer: 5
   m_Name: FirstPlayerNameInputField
-  m_TagString: Untagged
+  m_TagString: FirstPlayerNameInputField
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2188,7 +2216,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Name
+  m_Text: Player
 --- !u!222 &1691446659
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2737,7 +2765,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: fad9b12de8b984fb39e6c8d2723f3575, type: 3}
-    m_FontSize: 300
+    m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 4
@@ -2771,7 +2799,7 @@ GameObject:
   - component: {fileID: 2040582499}
   m_Layer: 5
   m_Name: SecondPlayerNameInputField
-  m_TagString: Untagged
+  m_TagString: SecondPlayerNameInputField
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

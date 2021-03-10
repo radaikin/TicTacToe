@@ -36,8 +36,16 @@ public class GameManager: MonoBehaviour
                 GameObject.FindWithTag("HintButton").SetActive(false);
                 GameObject.FindWithTag("SecondPlayer").AddComponent<Player>();
             }
-            GameObject.FindWithTag("FirstPlayer").GetComponent<AbstractPlayer>().SetSide(PlayerSide.FirstPlayer);
-            GameObject.FindWithTag("SecondPlayer").GetComponent<AbstractPlayer>().SetSide(PlayerSide.SecondPlayer);
+            GameObject.FindWithTag("FirstPlayer").GetComponent<AbstractPlayer>()
+                .SetSide(PlayerSide.FirstPlayer);
+            GameObject.FindWithTag("FirstPlayer").GetComponent<AbstractPlayer>()
+                .SetName(PlayerPrefs.GetString("FirstPlayerName"));
+            GameObject.FindWithTag("SecondPlayer").GetComponent<AbstractPlayer>()
+                .SetSide(PlayerSide.SecondPlayer);
+            GameObject.FindWithTag("SecondPlayer").GetComponent<AbstractPlayer>()
+                .SetName(PlayerPrefs.GetString("SecondPlayerName"));
+            //tmp
+            Debug.Log(GameObject.FindWithTag("SecondPlayer").GetComponent<AbstractPlayer>().GetName());
         }
 
         if (s_instance != null)

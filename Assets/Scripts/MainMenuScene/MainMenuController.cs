@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviour
 {
@@ -16,4 +17,13 @@ public class MainMenuController : MonoBehaviour
         SceneManager.LoadScene("GameScene");
     }
 
+    public void OnSettingsPressed()
+    {
+        GameObject.FindGameObjectWithTag("FirstPlayerNameInputField")
+            .GetComponent<InputField>().onEndEdit.AddListener(
+            (name) => PlayerPrefs.SetString("FirstPlayerName", name));
+        GameObject.FindGameObjectWithTag("SecondPlayerNameInputField")
+            .GetComponent<InputField>().onEndEdit.AddListener(
+            (name) => PlayerPrefs.SetString("SecondPlayerName", name));
+    }
 }

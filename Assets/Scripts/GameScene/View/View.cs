@@ -18,6 +18,11 @@ public class View : MonoBehaviour
         m_oSprite = Resources.Load<Sprite>("MoonActive/CircleTarget");
         m_HintSprite = Resources.Load<Sprite>("Buttons/Hint");
 
+        GameObject.FindWithTag("FirstPlayerName").GetComponent<Text>().text =
+            GameObject.FindWithTag("FirstPlayer").GetComponent<AbstractPlayer>().GetName();
+        GameObject.FindWithTag("SecondPlayerName").GetComponent<Text>().text =
+            GameObject.FindWithTag("SecondPlayer").GetComponent<AbstractPlayer>().GetName();
+
         buttonController = GameObject.FindGameObjectWithTag("ButtonController")
             .GetComponent<ButtonController>();
         buttons = buttonController.GetButtons();
