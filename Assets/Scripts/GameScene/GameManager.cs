@@ -1,23 +1,24 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public delegate void EndOfGame();
 public delegate void RestartTimer();
 public delegate void StopTimer();
 
-public enum EnemySetUP { Player, Computer};
+public enum EnemySetUP {Player, Computer};
 
 public class GameManager: MonoBehaviour
 {
-    private static GameManager s_instance;
-
     public event EndOfGame m_EndOfGameEvent;
     public event RestartTimer m_RestartTimerEvent;
     public event StopTimer m_StopTimer;
 
+    private static GameManager s_instance;
+
     private CellState[] m_FieldState = new CellState[9];
+    private Stack<CellState[]> m_FieldStateHistory = new Stack<CellState[]>();
     private int m_MoveCounter;
-    private static GameTree m_GameTree = new GameTree();
     private EnemySetUP m_EnemySetUP;
 
     private void Start()
@@ -44,8 +45,6 @@ public class GameManager: MonoBehaviour
                 .SetSide(PlayerSide.SecondPlayer);
             GameObject.FindWithTag("SecondPlayer").GetComponent<AbstractPlayer>()
                 .SetName(PlayerPrefs.GetString("SecondPlayerName"));
-            //tmp
-            Debug.Log(GameObject.FindWithTag("SecondPlayer").GetComponent<AbstractPlayer>().GetName());
         }
 
         if (s_instance != null)
@@ -56,24 +55,46 @@ public class GameManager: MonoBehaviour
 
         m_MoveCounter = 0;
         FieldInnit();
-        m_GameTree.Innit();
         s_instance = this;
         GameObject.DontDestroyOnLoad(gameObject); 
     }
 
     public static GameManager GetInstance() => s_instance;
 
-    public GameTree GetGameTree() => m_GameTree;
-
     public int GetMoveCount() => m_MoveCounter;
 
-    public CellState[] GetField() => m_FieldState;
+    public CellState[] GetFieldState() => m_FieldState;
 
     public void SetField(CellState[] field) => m_FieldState = field;
 
     public PlayerSide GetCurrentPlayer()
     {
-        return m_MoveCounter % 2 == 0 ? PlayerSide.FirstPlayer : PlayerSide.SecondPlayer;
+        return m_MoveCounter % 2 == 0 ?
+            PlayerSide.FirstPlayer : PlayerSide.SecondPlayer;
+    }
+
+    public void ChangeFiledState(int cellId, PlayerSide playerSide)
+    {
+        m_FieldState[cellId] = (playerSide == PlayerSide.FirstPlayer) ?
+            CellState.X : CellState.O;
+        m_MoveCounter++;
+        EndOfMove();
+    }
+
+    public void UndoLastStep()
+    {
+        m_MoveCounter = m_MoveCounter - 2;
+        m_FieldStateHistory.Pop();
+        m_FieldStateHistory.Pop();
+        m_FieldStateHistory.Peek().CopyTo(m_FieldState, 0);
+    }
+
+    public void Restart()
+    {
+        m_MoveCounter = 0;
+        m_FieldStateHistory.Clear();
+        FieldInnit();
+        m_RestartTimerEvent();
     }
 
     public void VsComputerSetUp()
@@ -84,21 +105,6 @@ public class GameManager: MonoBehaviour
     public void VsPlayerSetUp()
     {
         m_EnemySetUP = EnemySetUP.Player;
-    }
-
-    public void ChangeFiledState(int cellId, PlayerSide playerSide)
-    {
-        m_FieldState[cellId] = (playerSide == PlayerSide.FirstPlayer) ?
-            CellState.X : CellState.O;
-        EndOfMove();
-        m_MoveCounter++;
-    }
-
-    public void Restart()
-    {
-        FieldInnit();
-        m_MoveCounter = 0;
-        m_RestartTimerEvent();
     }
 
     public void SetHintToACell(int cellId)
@@ -123,9 +129,10 @@ public class GameManager: MonoBehaviour
 
     private void EndOfMove()
     {
-        if (m_MoveCounter >= 4 && !m_GameTree.NodeHasChild(m_FieldState))
+        m_FieldStateHistory.Push(m_FieldState.Clone() as CellState[]);
+        if (m_MoveCounter >= 4 && !GameTree.GetInstance().NodeHasChild(m_FieldState))
         {
-            switch (m_GameTree.GetNodeState(m_FieldState))
+            switch (GameTree.GetInstance().GetNodeState(m_FieldState))
             {
                 case NodeState.Win:
                     Win(PlayerSide.FirstPlayer);
@@ -156,7 +163,10 @@ public class GameManager: MonoBehaviour
 
     private void FieldInnit()
     {
-        for (int i = 0; i < m_FieldState.Length; i++) m_FieldState[i] = CellState.Empty;
+        for (int i = 0; i < m_FieldState.Length; i++)
+        {
+            m_FieldState[i] = CellState.Empty;
+        }
+        m_FieldStateHistory.Push(m_FieldState.Clone() as CellState[]);
     }
-
 }

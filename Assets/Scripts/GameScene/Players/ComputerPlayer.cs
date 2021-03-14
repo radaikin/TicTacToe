@@ -5,7 +5,7 @@ public class ComputerPlayer : AbstractPlayer
 {
     private void Update()
     {
-        if (this.MyStep() && GameManager.GetInstance().GetGameTree().NodeHasChild(GameManager.GetInstance().GetField()))
+        if (this.MyStep() && GameTree.GetInstance().NodeHasChild(GameManager.GetInstance().GetFieldState()))
         {
             MakeAMove();
         }
@@ -22,7 +22,7 @@ public class ComputerPlayer : AbstractPlayer
 
     private int makeChoise(NodeState nodeState)
     {
-        List<int> cells = GameManager.GetInstance().GetGameTree().GetCells(GameManager.GetInstance().GetField(), nodeState);
+        List<int> cells = GameTree.GetInstance().GetCells(GameManager.GetInstance().GetFieldState(), nodeState);
         if (cells.Count == 0) return -1;
         return cells[Random.Range(0, cells.Count)];
     }

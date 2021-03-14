@@ -12,8 +12,6 @@ public class View : MonoBehaviour
 
     void Start()
     {
-        fieldState = GameManager.GetInstance().GetField();
-
         m_xSprite = Resources.Load<Sprite>("MoonActive/ExTarget");
         m_oSprite = Resources.Load<Sprite>("MoonActive/CircleTarget");
         m_HintSprite = Resources.Load<Sprite>("Buttons/Hint");
@@ -30,6 +28,8 @@ public class View : MonoBehaviour
 
     void Update()
     {
+        fieldState = GameManager.GetInstance().GetFieldState();
+
         for (int i = 0; i < 9; i++)
         {
             if (fieldState[i] == CellState.O)

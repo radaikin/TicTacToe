@@ -14,8 +14,8 @@ public class Player : AbstractPlayer
     public void OnControllerPreset(int cellId)
     {
         if (this.MyStep() &&
-            (GameManager.GetInstance().GetField()[cellId] == CellState.Empty
-            || GameManager.GetInstance().GetField()[cellId] == CellState.Hint))
+            (GameManager.GetInstance().GetFieldState()[cellId] == CellState.Empty
+            || GameManager.GetInstance().GetFieldState()[cellId] == CellState.Hint))
         {
             this.ChangeFiledState(cellId);
         }
@@ -31,7 +31,7 @@ public class Player : AbstractPlayer
 
     private int MakeChoise(NodeState nodeState)
     {
-        List<int> cells = GameManager.GetInstance().GetGameTree().GetCells(GameManager.GetInstance().GetField(), nodeState);
+        List<int> cells = GameTree.GetInstance().GetCells(GameManager.GetInstance().GetFieldState(), nodeState);
         if (cells.Count == 0) return -1;
         return cells[m_random.Next(cells.Count)];
     }

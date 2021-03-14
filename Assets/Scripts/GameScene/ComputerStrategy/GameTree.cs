@@ -1,22 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using AdjacencyList = System.Collections.Generic.SortedDictionary<string, System.Collections.Generic.List<string>>;
 
-public class GameTree
+public class GameTree : MonoBehaviour
 {
+    private static GameTree s_instance;
     private AdjacencyList m_adjacencyList = new AdjacencyList();
     private SortedDictionary<string, Node> m_HashToNode = new SortedDictionary<string, Node>();
 
-    public GameTree()
+    private void Start()
     {
+        if (s_instance != null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        Init();
+        s_instance = this;
+        GameObject.DontDestroyOnLoad(gameObject);
     }
 
-    public void Innit()
-    {
-        BuildTree("_________", true);
-        StateCulculation("_________", true);
-        Console.Write("Done");
-    }
+    public static GameTree GetInstance() => s_instance;
 
     public AdjacencyList GetAdjacencyList() => m_adjacencyList;
 
@@ -166,6 +170,13 @@ public class GameTree
         else result = new Node(NodeState.Lose);
         m_HashToNode.Add(nodeHash, result);
         return result;
+    }
+
+    private void Init()
+    {
+        BuildTree("_________", true);
+        StateCulculation("_________", true);
+        Debug.Log("Game Tree was initialized.");
     }
 
     private string Hash(CellState[] field)
