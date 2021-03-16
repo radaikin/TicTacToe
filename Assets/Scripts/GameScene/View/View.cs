@@ -8,49 +8,74 @@ public class View : MonoBehaviour
     private Sprite m_HintSprite;
     private ButtonController buttonController;
     private Button[] buttons;
-    private CellState[] fieldState;
 
-    void Start()
+    private void Start()
     {
         m_xSprite = Resources.Load<Sprite>("MoonActive/ExTarget");
         m_oSprite = Resources.Load<Sprite>("MoonActive/CircleTarget");
         m_HintSprite = Resources.Load<Sprite>("Buttons/Hint");
-
+        Debug.Log(m_xSprite + "\n" + m_oSprite + "\n" + m_HintSprite);
+        Debug.Log("Player1" + GameObject.FindWithTag("FirstPlayerName"));
+        Debug.Log(GameObject.FindWithTag("FirstPlayer"));
         GameObject.FindWithTag("FirstPlayerName").GetComponent<Text>().text =
             GameObject.FindWithTag("FirstPlayer").GetComponent<AbstractPlayer>().GetName();
+
         GameObject.FindWithTag("SecondPlayerName").GetComponent<Text>().text =
             GameObject.FindWithTag("SecondPlayer").GetComponent<AbstractPlayer>().GetName();
-
-        buttonController = GameObject.FindGameObjectWithTag("ButtonController")
+        buttonController = GameObject.FindWithTag("ButtonController")
             .GetComponent<ButtonController>();
+        Debug.Log("ButtonController " + buttonController);
         buttons = buttonController.GetButtons();
+        Debug.Log("Start Buttons " + buttons);
     }
 
-    void Update()
+    private void Update()
     {
-        fieldState = GameManager.GetInstance().GetFieldState();
-
+        Debug.Log(new System.Diagnostics.StackTrace(true).GetFrame(0).GetFileName());
+        string log = "";
+        foreach(CellState cs in GameManager.GetInstance().GetFieldState())
+        {
+            if(cs == CellState.Empty) log += "_";
+            else log += cs.ToString();
+        }
+        Debug.Log("Field state: " + log);
+        log = "";
         for (int i = 0; i < 9; i++)
         {
-            if (fieldState[i] == CellState.O)
+            Debug.Log("In a loop " + i);
+            Debug.Log("Buttons "+ buttons);
+            Debug.Log("Buttons " + i + " " + buttons[i]);
+            if (GameManager.GetInstance().GetFieldState()[i] == CellState.O)
             {
+                Debug.Log("Button " + i + " sprite = " + buttons[i].image.sprite);
                 buttons[i].image.color = new Color(255, 255, 255, 1);
                 buttons[i].image.sprite = m_oSprite;
             }
-            else if (fieldState[i] == CellState.X)
+            else if (GameManager.GetInstance().GetFieldState()[i] == CellState.X)
             {
+                Debug.Log("Button " + i + " sprite = " + buttons[i].image.sprite);
                 buttons[i].image.color = new Color(255, 255, 255, 1);
                 buttons[i].image.sprite = m_xSprite;
             }
-            else if (fieldState[i] == CellState.Empty)
+            else if (GameManager.GetInstance().GetFieldState()[i] == CellState.Empty)
             {
+                Debug.Log("Button " + i + " is empty");
                 buttons[i].image.color = new Color(0, 0, 0, 0);
             }
-            else if (fieldState[i] == CellState.Hint)
+            else if (GameManager.GetInstance().GetFieldState()[i] == CellState.Hint)
             {
+                Debug.Log("Button " + i + " sprite = " + buttons[i].image.sprite);
                 buttons[i].image.color = new Color(255, 255, 255, 0.5f);
                 buttons[i].image.sprite = m_HintSprite;
             }
         }
+    }
+
+    private void OnDestroy()
+    {
+        Resources.UnloadAsset(m_xSprite);
+        Resources.UnloadAsset(m_oSprite);
+        Resources.UnloadAsset(m_HintSprite);
+        Debug.Log("Assets unloaded");
     }
 }

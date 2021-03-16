@@ -26,16 +26,19 @@ public class GameManager: MonoBehaviour
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("GameScene"))
         {
             GameObject.FindWithTag("FirstPlayer").AddComponent<Player>();
+            Debug.Log("Added Player Script to First Player");
 
             if (s_instance.m_EnemySetUP == EnemySetUP.Computer)
             {
                 GameObject.FindWithTag("HintButton").SetActive(true);
                 GameObject.FindWithTag("SecondPlayer").AddComponent<ComputerPlayer>();
+                Debug.Log("Added Computer Script to Second Player");
             }
             else if (s_instance.m_EnemySetUP == EnemySetUP.Player)
             {
                 GameObject.FindWithTag("HintButton").SetActive(false);
                 GameObject.FindWithTag("SecondPlayer").AddComponent<Player>();
+                Debug.Log("Added Player Script to Second Player");
             }
             GameObject.FindWithTag("FirstPlayer").GetComponent<AbstractPlayer>()
                 .SetSide(PlayerSide.FirstPlayer);
