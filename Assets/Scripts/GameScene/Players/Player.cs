@@ -31,9 +31,9 @@ public class Player : AbstractPlayer
 
     private int MakeChoise(NodeState nodeState)
     {
-        List<int> cells = GameTree.GetInstance().GetCells(GameManager.GetInstance().GetFieldState(), nodeState);
+        List<int> cells = GameTree.GetInstance().GetCells(GameManager.GetInstance().GetFieldState());
         if (cells.Count == 0) return -1;
-        return cells[m_random.Next(cells.Count)];
+        return cells[0];
     }
 }
 

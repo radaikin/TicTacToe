@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class ComputerPlayer : AbstractPlayer
 {
@@ -13,20 +14,30 @@ public class ComputerPlayer : AbstractPlayer
 
     public void MakeAMove()
     {
-        int random = Random.Range(0, 100);
-        int cellId = MakeAChoise(NodeState.Lose);
-        if (cellId == -1 || (GameManager.GetInstance().GetDifficultyLevel()
-            != DifficultyLevel.Hard && random <= 60)) cellId = MakeAChoise(NodeState.Draw);
-        if (cellId == -1 || (GameManager.GetInstance().GetDifficultyLevel()
-            == DifficultyLevel.Easy && random <= 50)) cellId = MakeAChoise(NodeState.Win);
-        if (cellId == -1) return;
-        this.ChangeFiledState(cellId);
+        StartCoroutine(SleepAndMove());
     }
 
-    private int MakeAChoise(NodeState nodeState)
+    private IEnumerator SleepAndMove()
     {
-        List<int> cells = GameTree.GetInstance().GetCells(GameManager.GetInstance().GetFieldState(), nodeState);
-        if (cells.Count == 0) return -1;
-        return cells[Random.Range(0, cells.Count)];
+        yield return new WaitForSeconds(1.5f);
+        this.ChangeFiledState(MakeAChoise());
     }
+
+    private int MakeAChoise()
+    {
+        List<int> cells = GameTree.GetInstance().GetCells(GameManager.GetInstance().GetFieldState());
+        if (cells.Count == 0) return -1;
+        switch (GameManager.GetInstance().GetDifficultyLevel())
+        {
+            case DifficultyLevel.Easy:
+                return cells[cells.Count - 1];
+            case DifficultyLevel.Normal:
+                return cells[Random.Range((int)(cells.Count * 0.3f), (int)(cells.Count * 0.7f))];
+            case DifficultyLevel.Hard:
+                return cells[Random.Range(0, cells.Count / 2)];
+            default:
+                return -1;
+        }
+    }
+
 }

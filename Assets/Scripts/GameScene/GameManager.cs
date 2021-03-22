@@ -18,7 +18,7 @@ public class GameManager: MonoBehaviour
 
     private CellState[] m_FieldState = new CellState[9];
     private Stack<CellState[]> m_FieldStateHistory = new Stack<CellState[]>();
-    private DifficultyLevel m_DifficultyLevel;
+    private DifficultyLevel m_DifficultyLevel = DifficultyLevel.Hard;
     private int m_MoveCounter;
     private EnemySetUP m_EnemySetUP;
 

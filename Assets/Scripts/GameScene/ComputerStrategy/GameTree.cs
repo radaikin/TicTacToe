@@ -62,21 +62,37 @@ public class GameTree : MonoBehaviour
         return !HasThreeInRaw(Hash(field));
     }
 
-    public List<int> GetCells(CellState[] field, NodeState state)
+    public List<int> GetCells(CellState[] field)
     {
         List<int> result = new List<int>();
+        List<int> lose = new List<int>();
+        List<int> draw = new List<int>();
+        List<int> win = new List<int>();
 
         List<string> childrens;
         m_adjacencyList.TryGetValue(Hash(field), out childrens);
+
+        Node node;
+
         foreach (string child in childrens)
         {
-            Node node;
             m_HashToNode.TryGetValue(child, out node);
-            if (node.state == state)
+            switch (node.state)
             {
-                result.Add(FindDifference(Hash(field), child));
+                case NodeState.Lose:
+                    lose.Add(FindDifference(Hash(field), child));
+                    break;
+                case NodeState.Draw:
+                    draw.Add(FindDifference(Hash(field), child));
+                    break;
+                case NodeState.Win:
+                    win.Add(FindDifference(Hash(field), child));
+                    break;
             }
         }
+        result.AddRange(lose);
+        result.AddRange(draw);
+        result.AddRange(win);
         return result;
     }
 
