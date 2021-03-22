@@ -18,6 +18,7 @@ public class GameManager: MonoBehaviour
 
     private CellState[] m_FieldState = new CellState[9];
     private Stack<CellState[]> m_FieldStateHistory = new Stack<CellState[]>();
+    private DifficultyLevel m_DifficultyLevel;
     private int m_MoveCounter;
     private EnemySetUP m_EnemySetUP;
 
@@ -74,6 +75,13 @@ public class GameManager: MonoBehaviour
     {
         return m_MoveCounter % 2 == 0 ?
             PlayerSide.FirstPlayer : PlayerSide.SecondPlayer;
+    }
+
+    public DifficultyLevel GetDifficultyLevel() => m_DifficultyLevel;
+
+    public void SetDifficultyLevel(DifficultyLevel difficultyLevel)
+    {
+        m_DifficultyLevel = difficultyLevel;
     }
 
     public void ChangeFiledState(int cellId, PlayerSide playerSide)
