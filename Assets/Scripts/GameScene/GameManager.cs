@@ -2,7 +2,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public delegate void EndOfGame();
+public delegate void EndOfGame(PlayerSide winner);
+public delegate void EndOfGameDraw();
 public delegate void RestartTimer();
 public delegate void StopTimer();
 
@@ -11,6 +12,7 @@ public enum EnemySetUP {Player, Computer};
 public class GameManager: MonoBehaviour
 {
     public event EndOfGame m_EndOfGameEvent;
+    public event EndOfGameDraw m_EndOfGameEventDraw;
     public event RestartTimer m_RestartTimerEvent;
     public event StopTimer m_StopTimer;
 
@@ -18,7 +20,7 @@ public class GameManager: MonoBehaviour
 
     private CellState[] m_FieldState = new CellState[9];
     private Stack<CellState[]> m_FieldStateHistory = new Stack<CellState[]>();
-    private DifficultyLevel m_DifficultyLevel = DifficultyLevel.Hard;
+    private DifficultyLevel m_DifficultyLevel;
     private int m_MoveCounter;
     private EnemySetUP m_EnemySetUP;
 
@@ -58,6 +60,7 @@ public class GameManager: MonoBehaviour
         }
 
         m_MoveCounter = 0;
+        m_DifficultyLevel = DifficultyLevel.Normal;
         FieldInnit();
         s_instance = this;
         GameObject.DontDestroyOnLoad(gameObject); 
@@ -162,14 +165,14 @@ public class GameManager: MonoBehaviour
     {
         Debug.Log("Draw!");
         m_StopTimer();
-        m_EndOfGameEvent();
+        m_EndOfGameEventDraw();
     }
 
     private void Win(PlayerSide winner)
     {
         Debug.Log("Player " + winner.ToString() + " won!");
         m_StopTimer();
-        m_EndOfGameEvent();
+        m_EndOfGameEvent(winner);
     }
 
     private void FieldInnit()
