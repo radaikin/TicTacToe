@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System.Collections;
 
 public class ComputerPlayer : AbstractPlayer
 {
@@ -14,12 +13,7 @@ public class ComputerPlayer : AbstractPlayer
 
     public void MakeAMove()
     {
-        StartCoroutine(SleepAndMove());
-    }
 
-    private IEnumerator SleepAndMove()
-    {
-        yield return new WaitForSeconds(1.5f);
         this.ChangeFiledState(MakeAChoise());
     }
 
