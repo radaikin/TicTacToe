@@ -1,6 +1,12 @@
-﻿
+﻿using System;
+
 public interface IPlayer
 {
-    PlayerSide GetPlayerSide();
-    void SetSide(PlayerSide playerSide);
+    PlayerState playerState
+    {
+        get;
+        set;
+    }
+
 }
+

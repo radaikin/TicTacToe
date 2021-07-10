@@ -1,27 +1,30 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-public class ComputerPlayer : AbstractPlayer
+public class ComputerPlayer : MonoBehaviour, IPlayer
 {
-    private void Update()
+    [SerializeField] private PlayerState m_PlayerState;
+    [SerializeField] private GameState m_GameState;
+
+    public PlayerState playerState
     {
-        if (this.MyStep() && GameTree.GetInstance().NodeHasChild(GameManager.GetInstance().GetFieldState()))
-        {
-            MakeAMove();
-        }
+        get => m_PlayerState;
+        set => m_PlayerState = value;
     }
 
     public void MakeAMove()
     {
-
-        this.ChangeFiledState(MakeAChoise());
+        if (m_PlayerState.MyStep() && GameTree.GetInstance().NodeHasChild(m_GameState.GetFieldState()))
+        {
+            m_GameState.ChangeFiledState(MakeAChoise());
+        }
     }
 
     private int MakeAChoise()
     {
-        List<int> cells = GameTree.GetInstance().GetCells(GameManager.GetInstance().GetFieldState());
+        List<int> cells = GameTree.GetInstance().GetCells(m_GameState.GetFieldState());
         if (cells.Count == 0) return -1;
-        switch (GameManager.GetInstance().GetDifficultyLevel())
+        switch (m_GameState.GetDifficultyLevel())
         {
             case DifficultyLevel.Easy:
                 return cells[cells.Count - 1];
@@ -33,5 +36,4 @@ public class ComputerPlayer : AbstractPlayer
                 return -1;
         }
     }
-
 }
