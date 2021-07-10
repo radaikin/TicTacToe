@@ -3,39 +3,38 @@ using UnityEngine.UI;
 
 public class View : MonoBehaviour
 {
-    private Sprite m_xSprite;
-    private Sprite m_oSprite;
-    private Sprite m_HintSprite;
-    private ButtonController buttonController;
+    [SerializeField]private GameState m_GameState;
+    [SerializeField]private Sprite m_xSprite;
+    [SerializeField]private Sprite m_oSprite;
+    [SerializeField]private Sprite m_HintSprite;
+    [SerializeField]private FieldButtonController buttonController;
     private Button[] buttons;
 
-    private void Start()
-    {
-        m_xSprite = Resources.Load<Sprite>("MoonActive/ExTarget");
-        m_oSprite = Resources.Load<Sprite>("MoonActive/CircleTarget");
-        m_HintSprite = Resources.Load<Sprite>("Buttons/Hint");
-        Debug.Log(m_xSprite + "\n" + m_oSprite + "\n" + m_HintSprite);
-        Debug.Log("Player1" + GameObject.FindWithTag("FirstPlayerName"));
-        Debug.Log(GameObject.FindWithTag("FirstPlayer"));
-        GameObject.FindWithTag("FirstPlayerName").GetComponent<Text>().text =
-            GameObject.FindWithTag("FirstPlayer").GetComponent<AbstractPlayer>().GetName();
+    //TODO remove FindWithTag()
+    //TODO dunno why but I cant set link to button controller in unity. find why and do it
 
-        GameObject.FindWithTag("SecondPlayerName").GetComponent<Text>().text =
-            GameObject.FindWithTag("SecondPlayer").GetComponent<AbstractPlayer>().GetName();
+    public void Init()
+    {
+        
+        //GameObject.FindWithTag("FirstPlayerName").GetComponent<Text>().text =
+        //    GameObject.FindWithTag("FirstPlayer").GetComponent<AbstractPlayer>().GetName();
+
+        //GameObject.FindWithTag("SecondPlayerName").GetComponent<Text>().text =
+        //    GameObject.FindWithTag("SecondPlayer").GetComponent<AbstractPlayer>().GetName();
         buttonController = GameObject.FindWithTag("ButtonController")
-            .GetComponent<ButtonController>();
+            .GetComponent<FieldButtonController>();
         Debug.Log("ButtonController " + buttonController);
         buttons = buttonController.GetButtons();
         Debug.Log("Start Buttons " + buttons);
     }
 
-    private void Update()
+    public void UpdateView()
     {
         Debug.Log(new System.Diagnostics.StackTrace(true).GetFrame(0).GetFileName());
         string log = "";
-        foreach(CellState cs in GameManager.GetInstance().GetFieldState())
+        foreach (CellState cs in m_GameState.GetFieldState())
         {
-            if(cs == CellState.Empty) log += "_";
+            if (cs == CellState.Empty) log += "_";
             else log += cs.ToString();
         }
         Debug.Log("Field state: " + log);
@@ -43,26 +42,26 @@ public class View : MonoBehaviour
         for (int i = 0; i < 9; i++)
         {
             Debug.Log("In a loop " + i);
-            Debug.Log("Buttons "+ buttons);
+            Debug.Log("Buttons " + buttons);
             Debug.Log("Buttons " + i + " " + buttons[i]);
-            if (GameManager.GetInstance().GetFieldState()[i] == CellState.O)
+            if (m_GameState.GetFieldState()[i] == CellState.O)
             {
                 Debug.Log("Button " + i + " sprite = " + buttons[i].image.sprite);
                 buttons[i].image.color = new Color(255, 255, 255, 1);
                 buttons[i].image.sprite = m_oSprite;
             }
-            else if (GameManager.GetInstance().GetFieldState()[i] == CellState.X)
+            else if (m_GameState.GetFieldState()[i] == CellState.X)
             {
                 Debug.Log("Button " + i + " sprite = " + buttons[i].image.sprite);
                 buttons[i].image.color = new Color(255, 255, 255, 1);
                 buttons[i].image.sprite = m_xSprite;
             }
-            else if (GameManager.GetInstance().GetFieldState()[i] == CellState.Empty)
+            else if (m_GameState.GetFieldState()[i] == CellState.Empty)
             {
                 Debug.Log("Button " + i + " is empty");
                 buttons[i].image.color = new Color(0, 0, 0, 0);
             }
-            else if (GameManager.GetInstance().GetFieldState()[i] == CellState.Hint)
+            else if (m_GameState.GetFieldState()[i] == CellState.Hint)
             {
                 Debug.Log("Button " + i + " sprite = " + buttons[i].image.sprite);
                 buttons[i].image.color = new Color(255, 255, 255, 0.5f);
@@ -73,9 +72,5 @@ public class View : MonoBehaviour
 
     private void OnDestroy()
     {
-        Resources.UnloadAsset(m_xSprite);
-        Resources.UnloadAsset(m_oSprite);
-        Resources.UnloadAsset(m_HintSprite);
-        Debug.Log("Assets unloaded");
     }
 }

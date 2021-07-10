@@ -20,9 +20,15 @@ public class EndOfGamePopUp : MonoBehaviour
     private void PopUp(PlayerSide winner)
     { 
         gameObject.SetActive(true);
-        if(winner == PlayerSide.FirstPlayer)
-        gameObject.GetComponentInChildren<Text>().text
-                = GameObject.FindWithTag(winner.ToString())
-                .GetComponent<AbstractPlayer>().GetName() + " won!";
+        //if(winner == PlayerSide.FirstPlayer)
+        //gameObject.GetComponentInChildren<Text>().text
+        //        = GameObject.FindWithTag(winner.ToString())
+        //TODO      .GetComponent<AbstractPlayer>().GetName() + " won!";
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.GetInstance().m_EndOfGameEvent -= PopUp;
+        GameManager.GetInstance().m_EndOfGameEventDraw -= DrawPopUp;
     }
 }
